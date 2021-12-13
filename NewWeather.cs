@@ -50,6 +50,44 @@ public class NewWeather : IModApi
         return atmosphereEffect;
     }
 
+    [HarmonyPatch()]
+    public class EnumUtils_Parse
+    {
+
+        static MethodBase TargetMethod()
+        {
+        
+            foreach (MethodInfo m in AccessTools.GetDeclaredMethods(typeof(EnumUtils)))
+            {
+                if (m.Name == "Parse")
+                {
+                    string fn = m.ToString();
+                    // Best heuristic I could come up with
+                    if (fn.LastIndexOf("TEnum") > fn.IndexOf("("))
+                    {
+                        return m.MakeGenericMethod(typeof(SpectrumWeatherType));
+                    }
+                }
+            }
+            return null;
+        }
+
+        public static bool Prefix(string _name, ref SpectrumWeatherType __result, bool _ignoreCase = false)
+        {
+            if (_ignoreCase == false && String.Equals("NewWeather", _name))
+            {
+                __result = SpectrumWeatherType.None + 1;
+                return false;
+            }
+            else if (String.Equals("NewWeather", _name, StringComparison.OrdinalIgnoreCase))
+            {
+                __result = SpectrumWeatherType.None + 1;
+                return false;
+            }
+            return true;
+        }
+    }
+
     [HarmonyPatch(typeof(WeatherManager))]
     [HarmonyPatch("LoadSpectrums")]
     public class WeatherManager_LoadSpectrums

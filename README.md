@@ -8,6 +8,10 @@ Weather is also not hooked up to any Biome, the only way to
 see the effect is by using the console `spectrum NewWeather`.
 If it succeeds, the sun-light should be a bright green :)
 
+Added generic harmony hook to let the new weather spectrum
+be hooked up to biome weather via xml config.
+Made snow biome green and hostile ;)
+
 ![Green Weather](Screens/green-weather.jpg)
 
 ### Download and Install

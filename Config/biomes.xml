@@ -1,0 +1,11 @@
+<configs>
+
+	<set xpath="/worldgeneration/biomes/biome[@name='snow']/weather[@name='fog']/@prob">80</set>
+	<set xpath="/worldgeneration/biomes/biome[@name='snow']/weather[@name='snow']/@prob">80</set>
+	<set xpath="/worldgeneration/biomes/biome[@name='snow']/weather[@name='storm']/@prob">80</set>
+
+	<set xpath="/worldgeneration/biomes/biome[@name='snow']/weather[@name='fog']/spectrum/@name">NewWeather</set>
+	<set xpath="/worldgeneration/biomes/biome[@name='snow']/weather[@name='snow']/spectrum/@name">NewWeather</set>
+	<set xpath="/worldgeneration/biomes/biome[@name='snow']/weather[@name='storm']/spectrum/@name">NewWeather</set>
+
+</configs>
