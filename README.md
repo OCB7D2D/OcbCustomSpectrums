@@ -8,6 +8,8 @@ Weather is also not hooked up to any Biome, the only way to
 see the effect is by using the console `spectrum NewWeather`.
 If it succeeds, the sun-light should be a bright green :)
 
+![Green Weather](Screens/green-weather.jpg)
+
 ### Download and Install
 
 Simply download here from GitHub and put into your A20 Mods folder:
