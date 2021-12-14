@@ -8,8 +8,8 @@
     <ProjectGuid>{67809304-F654-4560-BA8B-F393FA85B02B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NewWeather</RootNamespace>
-    <AssemblyName>NewWeather</AssemblyName>
+    <RootNamespace>Spectra0Core</RootNamespace>
+    <AssemblyName>Spectra0Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -73,7 +73,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NewWeather.cs" />
+    <Compile Include="WorldSpectra.cs" />
+    <Compile Include="Spectra0Core.cs" />
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
