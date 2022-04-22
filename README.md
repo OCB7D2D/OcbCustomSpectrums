@@ -49,4 +49,4 @@ Simply download here from GitHub and put into your A20 Mods folder:
 
 I've developed and tested this Mod against version a20.b218.
 
-[1]: https://github.com/OCB7D2D/Spectra0Core
+[1]: https://github.com/OCB7D2D/SpectraGreen
