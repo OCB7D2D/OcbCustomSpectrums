@@ -5,6 +5,6 @@
 		<Description value="Core mod to allow adding new spectra" />
 		<Website value="https://github.com/OCB7D2D/Spectra0Core" />
 		<Author value="ocbMaurice" />
-		<Version value="0.4.0" compat="A20"/>
+		<Version value="0.4.1" compat="A20"/>
 	</ModInfo>
 </xml>
