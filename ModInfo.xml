@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xml>
-	<ModInfo>
-		<Name value="Spectra0Core" />
-		<Description value="Core mod to allow adding new spectra" />
-		<Website value="https://github.com/OCB7D2D/Spectra0Core" />
-		<Author value="ocbMaurice" />
-		<Version value="0.4.1" compat="A20"/>
-	</ModInfo>
+	<Name value="OcbCustomSpectrums" />
+	<DisplayName value="OCB Custom Biome Spectrums" />
+	<Description value="Core mod to allow adding new biome spectrums" />
+	<Website value="https://github.com/OCB7D2D/OcbCustomSpectrums" />
+	<Author value="ocbMaurice" />
+	<Version value="0.5.0" />
 </xml>

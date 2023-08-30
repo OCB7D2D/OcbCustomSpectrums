@@ -1,9 +1,0 @@
-<configs>
-
-	<!-- prepare container element -->
-	<append xpath="/worldgeneration">
-		<spectra>
-		</spectra>
-	</append>
-
-</configs>
