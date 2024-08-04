@@ -8,20 +8,12 @@ public class SpectrumWeatherCmd : ConsoleCmdAbstract
     // ####################################################################
     // ####################################################################
 
-    protected override string[] getCommands() => new string[] { "cspctrm" };
+    public override string[] getCommands() => new string[] { "cspctrm" };
 
-    protected override string getDescription() => "force spectrum weather, e.g. fog, rain, storm, etc.";
+    public override string getDescription() => "force spectrum weather, e.g. fog, rain, storm, etc.";
 
     // ####################################################################
     // ####################################################################
-
-    // Contains the global spectrums for the given atmosphere effects
-    private static readonly HarmonyFieldProxy<AtmosphereEffect[]> AtmosphereEffect =
-        new HarmonyFieldProxy<AtmosphereEffect[]>(typeof(WeatherManager), "atmosphereSpectrum");
-
-    // Contains a spectrum per biome (if not overridden by spectrum link to global)
-    private static readonly HarmonyFieldProxy<AtmosphereEffect[]> WorldAtmosphereEffects =
-        new HarmonyFieldProxy<AtmosphereEffect[]>(typeof(BiomeAtmosphereEffects), "worldColorSpectrums");
 
     // Get pixel valiues from a given spectrum (all info is private)
     private static readonly HarmonyFieldProxy<Color[]> ColorSpectrumValues =
@@ -36,9 +28,6 @@ public class SpectrumWeatherCmd : ConsoleCmdAbstract
         {
             if (_params[0] == "weather")
             {
-                var asd = world.BiomeAtmosphereEffects;
-                var qwe = WorldAtmosphereEffects.Get(asd);
-
                 WeatherManager.Instance.ForceWeather(_params[1], 9999);
                 return;
             }
@@ -50,7 +39,7 @@ public class SpectrumWeatherCmd : ConsoleCmdAbstract
                 if (_params[1] == "biome")
                 {
                     var type = EnumUtils.Parse<AtmosphereEffect.ESpecIdx>(_params[3], true);
-                    var effects = WorldAtmosphereEffects.Get(world.BiomeAtmosphereEffects);
+                    var effects = world.BiomeAtmosphereEffects.worldColorSpectrums;
                     Log.Out("Analyse {0} => {1}", effects[0], type);
                     var spectrum = effects[0].spectrums[(int)type];
                     AnalyseSpectrum(spectrum);
@@ -63,7 +52,7 @@ public class SpectrumWeatherCmd : ConsoleCmdAbstract
                     var type = EnumUtils.Parse<AtmosphereEffect.ESpecIdx>(_params[3], true);
                     Log.Out("Analyse {0} => {1}", weather, type);
                     // WeatherManager.Instance.GetWeatherSpectrum()
-                    var effects = AtmosphereEffect.Get(null);
+                    var effects = WeatherManager.atmosphereSpectrum;
                     var effect = effects[(int)weather];
                     var spectrum = effect.spectrums[(int)type];
                     AnalyseSpectrum(spectrum);
@@ -78,7 +67,7 @@ public class SpectrumWeatherCmd : ConsoleCmdAbstract
     private void AnalyseSpectrum(ColorSpectrum spectrum)
     {
         Log.Out("Analyse the spectrum {0}", spectrum);
-        var cols = ColorSpectrumValues.Get(spectrum);
+        var cols = spectrum.values;
         for (float t = 0; t < 24f; t += 0.25f)
         {
             int p = (int)((t < 6 ? t + 18 : t - 6) / 24f * 1024);
