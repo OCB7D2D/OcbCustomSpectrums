@@ -1,4 +1,4 @@
-# OCB Custom Biome Spectrums Core Mod - 7 Days to Die (A21) Addon
+# OCB Custom Biome Spectrums Core Mod - 7 Days to Die (V1.0) Addon
 
 This mod doesn't do anything on its own, it only add
 functionality for other modders to add additional lighting
@@ -43,19 +43,15 @@ or change the spectrum of an existing biome weather:
 <set xpath="/worldgeneration/biomes/biome[@name='snow']/weather[@name='storm']/spectrum/@name">SpectrumGreen</set>
 ```
 
-Please refer to the [demo repository][1] for some example light
+Please refer to the [demo repository][1] for some example spectrum
 textures that have been taken directly from the game assets. I
 haven't figured out much myself, but I'm pretty sure that the
 textures are read left to right in regard to day time.
 
 ### Download and Install
 
-Simply download here from GitHub and put into your A21 Mods folder:
+Simply download here from GitHub and put into your Mods folder:
 
 - https://github.com/OCB7D2D/OcbCustomSpectrums/releases
-
-## Compatibility
-
-Developed initially for a20(b218), updated through A21.2(b14).
 
 [1]: https://github.com/OCB7D2D/OcbSpectraGreen
