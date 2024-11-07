@@ -111,20 +111,13 @@ public class OcbSpectrum
     // ####################################################################
     // ####################################################################
 
-    // Unfortunately ColorSpectrums dosn't allow to be created
-    // from anything else than a texture, although the final
-    // data it holds is just an array[1024] of colors. We
-    // use reflection to initialize the object ourself.
-    private static readonly HarmonyFieldProxy<Color[]> ColorSpectrumValues =
-        new HarmonyFieldProxy<Color[]>(typeof(ColorSpectrum), "values");
-
     // Return new ColorSpectrum for use by patches
     public ColorSpectrum GetColorSpectrum()
     {
         // Sneaky way to avoid going through creating a texture just to throw it away again
         var spectrum = FormatterServices.GetUninitializedObject(typeof(ColorSpectrum)) as ColorSpectrum;
-        // Set the color values directly on the object (unfortunately all private stuff)
-        ColorSpectrumValues.Set(spectrum, GetColorSpectrumValues());
+        // Set the color values directly on the object
+        spectrum.values = GetColorSpectrumValues();
         // Return the new color spectrum
         return spectrum;
     }

@@ -15,10 +15,6 @@ public class SpectrumWeatherCmd : ConsoleCmdAbstract
     // ####################################################################
     // ####################################################################
 
-    // Get pixel valiues from a given spectrum (all info is private)
-    private static readonly HarmonyFieldProxy<Color[]> ColorSpectrumValues =
-        new HarmonyFieldProxy<Color[]>(typeof(ColorSpectrum), "values");
-
     // public static Color[] GetColor
 
     public override void Execute(List<string> _params, CommandSenderInfo _senderInfo)

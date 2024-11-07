@@ -17,7 +17,11 @@ class WorldSpectrum
     // Used to load actual things once everybody is ready
     private static readonly Dictionary<string, List<KeyValuePair<int, ColorSpectrum>>>
         Spectrums = new Dictionary<string, List<KeyValuePair<int, ColorSpectrum>>>();
-    
+
+    // Spectra for global blood moon and cloud colors
+    public static ColorSpectrum BloodMoonSpectrum;
+    public static ColorSpectrum BloodCloudSpectrum;
+
     // Return number of effects
     // This includes built-ins
     public static int Count
@@ -46,6 +50,8 @@ class WorldSpectrum
         NameLC2Idx.Add("bloodmoon", 5);
         // Reserved, don't use
         NameLC2Idx.Add("none", 6);
+        BloodMoonSpectrum = null;
+        BloodCloudSpectrum = null;
     }
 
     // Load our spectrum config into the array of the built-in class
@@ -137,6 +143,46 @@ class WorldSpectrum
     // Entry point for harmony function
     public static void ParseXML(XDocument _xml)
     {
+
+        // Support for custom blood moon spectrum (new feature to color blood moons)
+        foreach (XElement node in _xml.XPathSelectElements("/worldgeneration/spectrum"))
+        {
+            XAttribute name = node.Attribute("name");
+            if (name == null || (name.Value != "bloodmoon" && name.Value != "bloodcloud"))
+            {
+                Log.Error("Global spectrum most either be `bloodmoon` or `bloodcloud`!");
+                continue;
+            }
+            foreach (XElement grad in node.Elements("gradient"))
+            {
+                Dictionary<float, Color> frames = new Dictionary<float, Color>();
+                foreach (XElement frame in grad.Elements("step"))
+                {
+                    if (!frame.HasAttribute("time"))
+                        Log.Error("No attribute `time` on gradient step");
+                    if (!frame.HasAttribute("color"))
+                        Log.Error("No attribute `color` on gradient step");
+                    frames.Add(NormalizeTime(float.Parse(frame.GetAttribute("time"))),
+                        StringParsers.ParseColor32(frame.GetAttribute("color")));
+                }
+                var spectrum = FormatterServices.GetUninitializedObject(typeof(ColorSpectrum)) as ColorSpectrum;
+                spectrum.values = GetGradientColors(frames.ToList());
+                if (name.Value == "bloodcloud") BloodCloudSpectrum = spectrum;
+                else if (name.Value == "bloodmoon") BloodMoonSpectrum = spectrum;
+            }
+            foreach (XElement tex in node.Elements("texture"))
+            {
+                XAttribute path = tex.Attribute("path");
+                if (path == null || path.Value == "")
+                {
+                    Log.Error("Spectrum texture must define a path!");
+                    continue;
+                }
+                if (name.Value == "bloodcloud") BloodCloudSpectrum = ColorSpectrumFromResource(path.Value);
+                else if (name.Value == "bloodmoon") BloodMoonSpectrum = ColorSpectrumFromResource(path.Value);
+            }
+        }
+
         // Use `selectNodes` to quickly get to our entry nodes
         // IMO the XML API is a little weird and lacks some features
         foreach (XElement node in _xml.XPathSelectElements("/worldgeneration/biomes/spectrum"))
@@ -236,7 +282,6 @@ class WorldSpectrum
         foreach (var node in _xml.XPathSelectElements(biomesXPath))
             CustomBiomeSpectrums.ParseBiomeSpectrums(node);
 
-        // UnityEngine.Application.Quit(); ;
     }
 
     private static float NormalizeTime(float v)

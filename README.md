@@ -48,6 +48,29 @@ textures that have been taken directly from the game assets. I
 haven't figured out much myself, but I'm pretty sure that the
 textures are read left to right in regard to day time.
 
+### Changing blood moon color (and blood moon cloud tint)
+
+With version 0.6.1 you can also tint the blood moon.
+
+```xml
+<append xpath="/worldgeneration">
+	<spectrum name="bloodmoon">
+		<gradient>
+			<step time="18.00" color="148,0,211,255"/>
+			<step time="24.00" color="255,0,0,255"/>
+			<step time="06.00" color="148,0,211,255"/>
+		</gradient>
+	</spectrum>
+	<spectrum name="bloodcloud">
+		<gradient>
+			<step time="18.00" color="148,0,211,255"/>
+			<step time="24.00" color="255,0,0,255"/>
+			<step time="06.00" color="148,0,211,255"/>
+		</gradient>
+	</spectrum>
+</append>
+```
+
 ### Download and Install
 
 Simply download here from GitHub and put into your Mods folder:

@@ -29,8 +29,34 @@ public class CustomSpectrums : IModApi
                 // Check if spectrum was not found be previous code from vanilla
                 if (SpectrumWeatherType.None != WeatherManager.forcedSpectrum) return;
                 // Let WorldSpectrum do the hard work (we keep track of everything)
-                var spectrum = WorldSpectrum.SpectrumName2Type(_params[0]);
+                // var spectrum = WorldSpectrum.SpectrumName2Type(_params[0]);
                 WeatherManager.SetForceSpectrum(WorldSpectrum.SpectrumName2Type(_params[0]));
+            }
+        }
+    }
+
+    // ####################################################################
+    // ####################################################################
+
+    [HarmonyPatch(typeof(SkyManager), "Update")]
+    public class SkyManager_Update_Patch
+    {
+        public static void Postfix()
+        {
+            if (SkyManager.IsBloodMoonVisible())
+            {
+                if (WorldSpectrum.BloodCloudSpectrum != null)
+                {
+                    var time = GameManager.Instance.World.m_WorldEnvironment.dayTimeScalar;
+                    var color = WorldSpectrum.BloodMoonSpectrum.GetValue(time);
+                    SkyManager.moonSpriteMat.SetColor("_Color", color);
+                }
+                if (WorldSpectrum.BloodMoonSpectrum != null)
+                {
+                    var time = GameManager.Instance.World.m_WorldEnvironment.dayTimeScalar;
+                    var color = WorldSpectrum.BloodMoonSpectrum.GetValue(time);
+                    SkyManager.cloudsSphereMtrl.SetColor("_MoonColor", color);
+                }
             }
         }
     }
